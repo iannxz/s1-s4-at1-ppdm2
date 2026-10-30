@@ -1,142 +1,140 @@
-# Sensores do Dispositivo
+<div align="center">
 
-Aplicativo mobile para consultar, de forma simples e visual, informações de localização, conectividade e movimento do aparelho.
+# Notificações
 
-**Expo 54 | React Native 0.81 | TypeScript 5.9**
+**Aplicativo mobile para demonstração de notificações locais**
+
+Desenvolvido com **React Native**, **Expo** e **TypeScript**.
+
+[Visão geral](#sobre-o-projeto) · [Tecnologias](#tecnologias) · [Executar](#como-executar) · [Estrutura](#estrutura-do-projeto)
+
+</div>
+
+---
 
 ## Sobre o projeto
 
-O **Sensores do Dispositivo** reúne três experiências em uma aplicação React Native: posição atual por GPS, informações da conexão ativa e leitura do acelerômetro em tempo real.
+Aplicação mobile desenvolvida para a atividade prática **S1_R4 - AT1_PPDM2**. O aplicativo apresenta uma tela inicial simples, com um botão que solicita a permissão do sistema e agenda uma **notificação local** para ser exibida no dispositivo.
 
-O projeto utiliza Expo e navegação em pilha, possui tipagem estrita com TypeScript e trata estados de carregamento, indisponibilidade, permissões e erros diretamente na interface.
+> [!NOTE]
+> O projeto demonstra notificações locais agendadas no próprio aparelho. Ele não implementa envio de notificações push remotas por servidor.
 
-## Capturas de tela
+## Captura de tela
 
-<!-- Para atualizar a galeria, substitua os arquivos em assets/screenshots mantendo os mesmos nomes. -->
+<div align="center">
 
-| Tela inicial | Posição atual | Conexão de rede | Acelerômetro |
-| :---: | :---: | :---: | :---: |
-| ![Tela inicial do aplicativo](./assets/screenshots/home.jpg) | ![Tela de posição atual](./assets/screenshots/gps.jpg) | ![Tela de conexão de rede](./assets/screenshots/wifi.jpg) | ![Tela do acelerômetro](./assets/screenshots/acelerometro.jpg) |
+<img src="https://github.com/user-attachments/assets/96f444a1-5fd6-402d-bb10-80aeb8c43b89" alt="Tela inicial do aplicativo Notificações" width="300" />
+
+*Tela inicial — botão para disparar uma notificação local.*
+
+</div>
 
 ## Funcionalidades
 
-### Posição atual
+- Interface inicial com o título **Notificações**.
+- Botão **Enviar notificação**.
+- Solicitação de permissão para exibir notificações.
+- Agendamento de uma notificação local para um segundo após o acionamento.
+- Exibição da notificação como banner e na central/lista de notificações, conforme suporte do sistema.
 
-- Solicitação de permissão de localização em primeiro plano;
-- Captura da posição atual com precisão balanceada;
-- Conversão das coordenadas em endereço por geocodificação reversa;
-- Exibição da precisão do GPS e do horário da última atualização;
-- Atualização manual da localização;
-- Cópia do endereço completo para a área de transferência.
+## Fluxo de funcionamento
 
-### Conexão de rede
-
-- Identificação do tipo de conexão ativa;
-- Indicação do estado da conexão e da disponibilidade de internet;
-- Exibição do endereço IPv4 da interface principal;
-- Monitoramento de alterações da rede;
-- Consulta ao modo avião em dispositivos Android;
-- Atualização manual das informações.
-
-### Acelerômetro
-
-- Leitura dos eixos **X**, **Y** e **Z** em força *g*;
-- Cálculo da magnitude vetorial dos três eixos;
-- Atualização das medições a cada 200 ms;
-- Controles para iniciar, pausar e zerar os valores;
-- Verificação da disponibilidade do sensor;
-- Remoção segura do listener ao sair da tela.
+```mermaid
+flowchart TD
+    A([Abrir aplicativo]) --> B[Tela Notificações]
+    B --> C[Toque em Enviar notificação]
+    C --> D[Solicitar permissão ao sistema]
+    D --> E{Permissão concedida?}
+    E -- Não --> F[Encerrar ação]
+    E -- Sim --> G[Agendar notificação local]
+    G --> H[Aguardar 1 segundo]
+    H --> I[Exibir notificação no dispositivo]
+```
 
 ## Tecnologias
 
-| Tecnologia | Uso no projeto |
-| --- | --- |
-| [Expo SDK 58](https://docs.expo.dev/versions/v58.0.0/) | Ambiente de desenvolvimento e acesso às APIs nativas |
-| [React Native 0.81](https://reactnative.dev/) | Construção da interface mobile |
-| [React 19](https://react.dev/) | Componentes e gerenciamento de estado |
-| [TypeScript 5.9](https://www.typescriptlang.org/) | Tipagem estática e modo estrito |
-| [React Navigation 7](https://reactnavigation.org/) | Navegação entre as telas |
-| [Expo Location](https://docs.expo.dev/versions/v58.0.0/sdk/location/) | Localização e geocodificação reversa |
-| [Expo Network](https://docs.expo.dev/versions/v58.0.0/sdk/network/) | Estado da rede, conectividade e endereço IP |
-| [Expo Sensors](https://docs.expo.dev/versions/v58.0.0/sdk/accelerometer/) | Leituras do acelerômetro |
-| [Expo Clipboard](https://docs.expo.dev/versions/v58.0.0/sdk/clipboard/) | Cópia do endereço para a área de transferência |
+| Tecnologia | Aplicação |
+|---|---|
+| [React Native](https://reactnative.dev/) | Construção da interface mobile |
+| [Expo SDK 58](https://docs.expo.dev/) | Ambiente e APIs nativas |
+| [Expo Notifications](https://docs.expo.dev/versions/latest/sdk/notifications/) | Permissões e agendamento de notificações |
+| [React 19](https://react.dev/) | Base da aplicação |
+| [TypeScript 6](https://www.typescriptlang.org/) | Tipagem do projeto |
 
 ## Como executar
 
 ### Pré-requisitos
 
-- [Node.js](https://nodejs.org/) em uma versão LTS;
-- npm;
-- Expo Go compatível com o SDK 58 ou um ambiente nativo compatível;
-- Um dispositivo físico é recomendado para testar corretamente GPS e acelerômetro.
+- [Node.js](https://nodejs.org/) em versão compatível com o Expo.
+- npm.
+- [Expo Go](https://expo.dev/go) ou ambiente nativo configurado.
 
 ### Instalação
 
+Clone o repositório e acesse a pasta:
+
 ```bash
-git clone https://github.com/iannxz/s1_r1_at1_ppdm2.git
-cd s1_r1_at1_ppdm2
+git clone https://github.com/iannxz/s1-s4-at1-ppdm2.git
+cd s1-s4-at1-ppdm2
+```
+
+Instale as dependências:
+
+```bash
 npm ci
 ```
 
-### Iniciando o projeto
+Inicie o servidor de desenvolvimento:
 
 ```bash
-npm start
+npx expo start
 ```
 
-Com o servidor do Expo aberto, escaneie o QR Code em um dispositivo compatível ou escolha uma das opções disponíveis no terminal.
+Leia o QR Code com o Expo Go ou execute em um ambiente configurado.
 
-## Scripts disponíveis
+### Comandos disponíveis
 
 | Comando | Descrição |
-| --- | --- |
-| `npm start` | Inicia o servidor de desenvolvimento do Expo |
-| `npm run android` | Abre o projeto no Android |
-| `npm run ios` | Abre o projeto no simulador iOS, disponível no macOS |
-| `npm run web` | Inicia a versão web, sujeita às limitações das APIs do navegador |
+|---|---|
+| `npm start` | Inicia o servidor Expo |
+| `npm run android` | Inicia o projeto no Android |
+| `npm run ios` | Inicia o projeto no simulador iOS (macOS) |
+| `npm run web` | Inicia a versão web |
 
 ## Estrutura do projeto
 
 ```text
 .
 ├── assets/
-│   ├── screenshots/             # Capturas de tela usadas no README
-│   └── ...                      # Ícones e imagens da aplicação
+│   └── screenshots/
+│       └── tela-notificacoes.png
 ├── src/
 │   └── screens/
-│       ├── Acelerometro/         # Leitura dos eixos e magnitude
-│       ├── Home/                 # Menu principal
-│       ├── PosicaoGps/           # GPS, endereço e clipboard
-│       └── RedesWifi/            # Estado e detalhes da conexão
-├── types/
-│   └── navigation.ts             # Tipagem das rotas
-├── App.tsx                       # Navegação e configuração global
-├── app.json                      # Configuração do Expo
-├── index.ts                      # Ponto de entrada
-├── package.json                  # Dependências e scripts
-└── tsconfig.json                 # Configuração do TypeScript
+│       └── Home/
+│           └── index.tsx
+├── App.tsx
+├── app.json
+├── index.ts
+├── package.json
+├── package-lock.json
+└── tsconfig.json
 ```
 
-## Permissões e limitações
+## Implementação da notificação
 
-- A tela de localização solicita acesso ao GPS enquanto o aplicativo está em uso. Sem essa permissão, a posição não pode ser exibida.
-- A geocodificação reversa depende dos serviços de localização da plataforma e pode não retornar um endereço completo.
-- O acelerômetro no iOS deve ser testado em um dispositivo físico.
-- Emuladores e simuladores precisam de localização e sensores simulados para produzir leituras úteis.
-- A consulta ao modo avião pela API utilizada está disponível apenas no Android.
-- O Expo Go não permite varrer redes Wi-Fi próximas nem consultar seus SSIDs. A aplicação mostra somente informações da conexão ativa disponibilizadas pelo sistema.
-- A experiência web possui restrições próprias do navegador; para validar todas as funcionalidades, prefira Android ou iOS.
+Ao pressionar o botão, a aplicação:
 
-## Privacidade
+1. Solicita a permissão de notificações com `requestPermissionsAsync()`.
+2. Verifica se a permissão foi concedida.
+3. Agenda a notificação usando `scheduleNotificationAsync()`.
+4. Define um intervalo de **1 segundo** para a exibição.
 
-O aplicativo não possui backend nem persistência própria. As informações obtidas são usadas para exibição durante a execução e não são armazenadas pelo projeto.
-
-## Autor
-
-Desenvolvido por [@iannxz](https://github.com/iannxz).
+A notificação utiliza o título `Notificação` e a mensagem `Receba!!`.
 
 ---
 
 <div align="center">
-  Feito com React Native, Expo e TypeScript.
+
+Desenvolvido como atividade prática de Programação para Dispositivos Móveis.
+
 </div>
